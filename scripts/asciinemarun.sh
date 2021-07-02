@@ -8,6 +8,7 @@ runner () {
   FILE_2_SAVE=$2
   TITLE_4_CAST=$3
   asciinema \
+    rec \
     --quiet \
     --title $TITLE_4_CAST \
     --idle-time-limit 2.5 \
