@@ -72,6 +72,9 @@ reqs: linuxreqs
 
 linuxreqs: kubectl helm minikube jinja2-cli submodules/openebs yaml2json ct
 
+jinja2-cli:
+	pip install -U jinja2-cli
+
 helm: $(KUBASH_BIN)
 	@scripts/kubashnstaller helm
 
