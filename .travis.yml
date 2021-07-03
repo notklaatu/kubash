@@ -6,24 +6,20 @@ matrix:
       services:
       - docker
       env:
+        - KUBE_VERSION=v1.21.0
+        - MINIKUBE_VERSION=v1.21.0
+        - MINIKUBE_DRIVER=docker
         - MINIKUBE_MEMORY=7777
         - MINIKUBE_CPU=4
-        - MINIKUBE_DRIVER=docker
-        - HELM_INSTALL_DIR=$HOME/.local/bin
+        - TRAVIS_KUBASH=true
         - NVM_DIR="$HOME/.nvm"
         - CHANGE_MINIKUBE_NONE_USER=true
-        - MINIKUBE_VERSION=v1.21.0
-        - KUBE_VERSION=v1.21.0
-        - CHANGE_MINIKUBE_NONE_USER=true
-        - TRAVIS_KUBASH=true
+        - HELM_INSTALL_DIR=$HOME/.local/bin
       cache: npm
       cache: pip
       cache:
           directories:
             - $HOME/.local/bin
-            #- .git
-          #- $HOME/.kube
-          #- $HOME/.minikube
 
 language: node_js
 node_js:
@@ -61,6 +57,7 @@ before_script:
 #- ls -alh /home/travis/.kubash/bin
 #- export PATH=/home/travis/.local/bin:$PATH
 #- echo "export PATH=/home/travis/.local/bin:$PATH" >> /home/travis/.bashrc
+- printenv
 #- echo $PATH
 # Make root mounted as rshared to fix kube-dns issues.
 - sudo mount --make-rshared /
@@ -85,12 +82,11 @@ before_script:
 
 script:
 - kubectl cluster-info
-- cd .. && cp -al kubash .kubash && cd kubash
-- bash scripts/test_bootstrap.sh
-- bash scripts/test_yaml2cluster.sh
-- bash scripts/test_bats.sh $HOME/.kubash
-- /bin/bash -l -c "ssh-keyscan 127.0.0.1 >> $HOME/.ssh/known_hosts"
+  #- cd .. && cp -al kubash .kubash && cd kubash
+  #- bash scripts/test_bootstrap.sh
+  #- bash scripts/test_yaml2cluster.sh
+  #- bash scripts/test_bats.sh $HOME/.kubash
+  #- /bin/bash -l -c "ssh-keyscan 127.0.0.1 >> $HOME/.ssh/known_hosts"
 - /bin/bash -l -c "kubash openebs"
 - /bin/bash -l -c "kubash voyager"
-  #- bats .ci/.tests.bats
 - /bin/bash -l -c "bats .ci/.tests.bats"
