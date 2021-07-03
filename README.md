@@ -44,7 +44,7 @@ By default kubash is quiet unless an error is hit (though many of the
 programs called by kubash might not be very quiet so there is still
 lot's of noise at `VERBOSITY=0`).  If you like
 watching noisy output crank up the verbosity by adding a few v flags
-(i.e. `-vvvv`) or secify the verbosity `--verbosity 100` or export it as
+(i.e. `-vvvv`) or specify the verbosity `--verbosity 100` or export it as
 a environment variable e.g.
 
 ```

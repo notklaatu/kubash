@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eux
 TARGET_OS=bionic
 TARGET_VERSION=1.21.2
 CLUSTER_NAME=kubash_test123
