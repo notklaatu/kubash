@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -ex
 TMP=$(mktemp -d)
 . /etc/os-release
 : ${DEB_PRE_PACKAGES_TO_INSTALL:='apt-transport-https ca-certificates curl ebtables ethtool keepalived open-iscsi tgt ntp software-properties-common'}
