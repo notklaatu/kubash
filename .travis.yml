@@ -84,6 +84,7 @@ before_script:
 
 script:
 - kubectl cluster-info
+- cd .. && ln -s kubash .kubash && cd kubash
 - bash scripts/test_bootstrap.sh
 - bash scripts/test_yaml2cluster.sh
 - bash scripts/test_bats.sh $HOME/.kubash
