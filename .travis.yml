@@ -26,7 +26,7 @@ matrix:
 
 language: node_js
 node_js:
-  - "8"
+  - "12"
 
 addons:
   apt:
@@ -49,7 +49,7 @@ before_install:
 - printf '#!/bin/bash\nexit 0'>/tmp/nmap && chmod +x /tmp/nmap && sudo mv /tmp/nmap /usr/bin/nmap
 
 before_script:
-- make bats
+  #- make bats
 - pip install --user jinja2-cli
 - npm i -g yaml2json
 - if [[ ! -e "$HOME/.local/bin/ct" ]]; then make ct && mv /home/travis/.kubash/bin/ct /home/travis/.local/bin/ct; fi
@@ -87,6 +87,7 @@ script:
 - bash scripts/test_yaml2cluster.sh
 - bash scripts/test_bats.sh $HOME/.kubash
 - /bin/bash -l -c "ssh-keyscan 127.0.0.1 >> $HOME/.ssh/known_hosts"
-- /bin/bash -l -c "kubash ping"
+- /bin/bash -l -c "kubash openebs"
+- /bin/bash -l -c "kubash voyager"
   #- bats .ci/.tests.bats
 - /bin/bash -l -c "bats .ci/.tests.bats"
