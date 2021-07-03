@@ -86,6 +86,7 @@ script:
 - bash scripts/test_bootstrap.sh
 - bash scripts/test_yaml2cluster.sh
 - bash scripts/test_bats.sh $HOME/.kubash
-- /bin/bash -l -c "yes y|kubash ping"
+- /bin/bash -l -c "ssh-keyscan 127.0.0.1 >> $HOME/.ssh/known_hosts"
+- /bin/bash -l -c "kubash ping"
   #- bats .ci/.tests.bats
 - /bin/bash -l -c "bats .ci/.tests.bats"
