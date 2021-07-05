@@ -323,7 +323,8 @@ EOF
     #install_default_docker
   elif [ "$KUBEADM_INSTALL" = "nomad" ]; then
     # Installing nomad
-		curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key -y add -
+    install_kubernetes_docker
+		curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 		sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 		sudo apt-get -yqq update && sudo apt-get install -yqq nomad
   elif [ "$KUBEADM_INSTALL" = "kubeadm2ha" ]; then
