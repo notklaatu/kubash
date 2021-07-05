@@ -766,6 +766,13 @@ parse_opts () {
         target_build=bionic$build_num-18.04-amd64
         packer_create_pax_dir 'bionic' $build_num
       fi
+    elif [[ "$target_os" =~ 'nomad' ]]; then
+      if [[ -z "$target_build" ]]; then
+        echo "matching $target_os"
+        build_num=$(echo $target_os | sed 's/nomad//')
+        target_build=nomad$build_num-18.04-amd64
+        packer_create_pax_dir 'nomad' $build_num
+      fi
     elif [[ "$target_os" =~ 'buster' ]]; then
       if [[ -z "$target_build" ]]; then
         echo "matching $target_os"
