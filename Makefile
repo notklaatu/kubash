@@ -64,7 +64,7 @@ $(eval TERRAFORM_VERSION := "0.15.3")
 $(eval KUBEBUILDER_VERS := 2.3.1)
 $(eval KIND_VERS := v0.9.0)
 $(eval RKE_VERS := v1.0.16)
-
+$(eval KOMPOSE_VERSION := "v1.22.0")
 
 all: $(KUBASH_BIN)/kush $(KUBASH_BIN)/kzsh $(KUBASH_BIN)/kudash reqs anaconda nvm
 
@@ -192,7 +192,7 @@ $(KUBASH_BIN)/kompose: SHELL:=/bin/bash
 $(KUBASH_BIN)/kompose:
 	$(eval TMP := $(shell mktemp -d --suffix=MINIKUBETMP))
 	cd $(TMP) \
-	&& curl -L https://github.com/kubernetes/kompose/releases/download/v1.18.0/kompose-linux-amd64 -o kompose
+	&& curl -L https://github.com/kubernetes/kompose/releases/download/${KOMPOSE_VERSION}/kompose-linux-amd64 -o kompose
 	install -m511 ${TMP}/kompose $(KUBASH_BIN)/
 	rm ${TMP}/kompose
 	rmdir ${TMP}
