@@ -65,6 +65,7 @@ $(eval KUBEBUILDER_VERS := 2.3.1)
 $(eval KIND_VERS := v0.9.0)
 $(eval RKE_VERS := v1.0.16)
 $(eval KOMPOSE_VERSION := "v1.22.0")
+$(eval NOMAD_VERSION := "1.1.2")
 
 all: $(KUBASH_BIN)/kush $(KUBASH_BIN)/kzsh $(KUBASH_BIN)/kudash reqs anaconda nvm
 
@@ -588,7 +589,7 @@ nomad: $(KUBASH_BIN)/nomad
 
 $(KUBASH_BIN)/nomad:
 	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
-	cd $(TMP) && curl -sLS https://releases.hashicorp.com/nomad/1.1.0/nomad_1.1.0_linux_amd64.zip | jar xv
+	cd $(TMP) && curl -sLS https://releases.hashicorp.com/nomad/$(NOMAD_VERSION)/nomad_$(NOMAD_VERSION)_linux_amd64.zip | jar xv
 	cd $(TMP) && ls -alh
 	chmod +x $(TMP)/nomad
 	sudo install -v -m511 ${TMP}/nomad $(KUBASH_BIN)/nomad
