@@ -66,6 +66,8 @@ $(eval KIND_VERS := v0.9.0)
 $(eval RKE_VERS := v1.0.16)
 $(eval KOMPOSE_VERSION := "v1.22.0")
 $(eval NOMAD_VERSION := "1.1.2")
+$(eval VAULT_VERSION := "1.7.3")
+$(eval CONSUL_VERSION := "1.10.1")
 
 all: $(KUBASH_BIN)/kush $(KUBASH_BIN)/kzsh $(KUBASH_BIN)/kudash reqs anaconda nvm
 
@@ -590,7 +592,26 @@ nomad: $(KUBASH_BIN)/nomad
 $(KUBASH_BIN)/nomad:
 	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
 	cd $(TMP) && curl -sLS https://releases.hashicorp.com/nomad/$(NOMAD_VERSION)/nomad_$(NOMAD_VERSION)_linux_amd64.zip | jar xv
-	cd $(TMP) && ls -alh
 	chmod +x $(TMP)/nomad
 	sudo install -v -m511 ${TMP}/nomad $(KUBASH_BIN)/nomad
+	rm -Rf $(TMP)
+
+vault: $(KUBASH_BIN)/vault
+
+$(KUBASH_BIN)/vault:
+	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
+	cd $(TMP) && curl -sLS https://releases.hashicorp.com/vault/$(VAULT_VERSION)/vault_$(VAULT_VERSION)_linux_amd64.zip | jar xv
+	cd $(TMP) && ls -alh 
+	chmod +x $(TMP)/vault
+	sudo install -v -m511 ${TMP}/vault $(KUBASH_BIN)/vault
+	rm -Rf $(TMP)
+
+consul: $(KUBASH_BIN)/consul
+
+$(KUBASH_BIN)/consul:
+	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
+	cd $(TMP) && curl -sLS https://releases.hashicorp.com/consul/$(CONSUL_VERSION)/consul_$(CONSUL_VERSION)_linux_amd64.zip | jar xv
+	cd $(TMP) && ls -alh 
+	chmod +x $(TMP)/consul
+	sudo install -v -m511 ${TMP}/consul $(KUBASH_BIN)/consul
 	rm -Rf $(TMP)
