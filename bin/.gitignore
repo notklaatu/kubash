@@ -45,3 +45,6 @@ tiller
 tuning
 velero
 vlan
+nomad
+consul
+vault
