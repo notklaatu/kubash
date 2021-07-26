@@ -1,7 +1,8 @@
 #!/bin/bash
 set -ex
 TMP=$(mktemp -d)
-. /etc/os-release
+sed 's/^/export /' /etc/os-release > /tmp/os-release
+. /tmp/os-release
 printenv
 : ${DEB_PRE_PACKAGES_TO_INSTALL:='apt-transport-https ca-certificates curl ebtables ethtool keepalived open-iscsi tgt ntp software-properties-common'}
 if [[ $UBUNTU_CODENAME == 'focal' ]]; then
