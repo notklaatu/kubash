@@ -4,7 +4,7 @@ TMP=$(mktemp -d)
 sed 's/^/export /' /etc/os-release > /tmp/os-release
 . /tmp/os-release
 printenv
-: ${DEB_PRE_PACKAGES_TO_INSTALL:='apt-transport-https ca-certificates curl ebtables ethtool keepalived open-iscsi tgt ntp software-properties-common'}
+: ${DEB_PRE_PACKAGES_TO_INSTALL:='jq apt-transport-https ca-certificates curl ebtables ethtool keepalived open-iscsi tgt ntp software-properties-common'}
 if [ $UBUNTU_CODENAME = 'focal' ]; then
   echo 'Focal is the OS'
   : ${DEB_PACKAGES_TO_INSTALL:='ceph sysstat rsync fail2ban net-tools dnsutils python3-pip vim htop iotop iftop zsh'}
