@@ -616,7 +616,7 @@ $(KUBASH_BIN)/consul:
 	rm -Rf $(TMP)
 
 
-minio: $(KUBASH_BIN)/minio mc
+minio: $(KUBASH_BIN)/minio mc kubectl-minio
 
 $(KUBASH_BIN)/minio:
 	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
@@ -636,3 +636,12 @@ $(KUBASH_BIN)/mc:
 	  && sudo install -v -m511 ${TMP}/mc $(KUBASH_BIN)/mc
 	rm -Rf $(TMP)
 
+kubectl-minio: $(KUBASH_BIN)/kubectl-minio
+
+$(KUBASH_BIN)/kubectl-minio:
+	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
+	cd $(TMP) \
+		&& wget https://github.com/minio/operator/releases/download/v4.1.3/kubectl-minio_4.1.3_linux_amd64 -O kubectl-minio \
+	  && chmod +x kubectl-minio \
+	  && sudo install -v -m511 ${TMP}/kubectl-minio $(KUBASH_BIN)/kubectl-minio
+	rm -Rf $(TMP)
