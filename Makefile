@@ -448,10 +448,9 @@ submodules/openebs:
 	cd submodules; git clone https://github.com/openebs/openebs.git
 
 cfssl:
-	sudo curl -s -o $(KUBASH_BIN)/cfssl https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
-	sudo curl -s -o $(KUBASH_BIN)/cfssljson https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
-	sudo ls -alh $(KUBASH_BIN)/
-	sudo chmod +x $(KUBASH_BIN)/cfssl*
+	go get github.com/cloudflare/cfssl/cmd/cfssl
+	go get github.com/cloudflare/cfssl/cmd/cfssljson
+	go get github.com/cloudflare/cfssl/cmd/cfssl-certinfo
 
 
 anaconda: $(KUBASH_BIN)/Anaconda.sh
