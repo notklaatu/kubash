@@ -616,16 +616,23 @@ $(KUBASH_BIN)/consul:
 	rm -Rf $(TMP)
 
 
-minio: $(KUBASH_BIN)/minio
+minio: $(KUBASH_BIN)/minio mc
 
 $(KUBASH_BIN)/minio:
 	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
 	cd $(TMP) \
-	  && wget https://dl.min.io/client/mc/release/linux-amd64/mc \
 	  && wget https://dl.min.io/server/minio/release/linux-amd64/minio \
 	  && chmod +x minio \
-	  && chmod +x mc \
 	  && sudo install -v -m511 ${TMP}/minio $(KUBASH_BIN)/minio
+	rm -Rf $(TMP)
+
+mc: $(KUBASH_BIN)/mc
+
+$(KUBASH_BIN)/mc:
+	$(eval TMP := $(shell mktemp -d --suffix=kubashTMP))
+	cd $(TMP) \
+	  && wget https://dl.min.io/client/mc/release/linux-amd64/mc \
+	  && chmod +x mc \
 	  && sudo install -v -m511 ${TMP}/mc $(KUBASH_BIN)/mc
 	rm -Rf $(TMP)
 
