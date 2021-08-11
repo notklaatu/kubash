@@ -49,3 +49,6 @@ vlan
 nomad
 consul
 vault
+kubectl-minio
+mc
+minio
