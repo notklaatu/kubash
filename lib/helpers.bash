@@ -59,6 +59,13 @@ install_efk_opendistro () {
   helm install ${THIS_CLUSTER}-es --values=$thisDIR/opendistro-values.yaml . 
 }
 
+install_efk_opensearch () {
+  cd $thisDIR
+  cd ~/.kubash/submodules/opensearch-devops/Helm/opensearch
+  echo helm install ${THIS_CLUSTER}-es --values=$thisDIR/opensearch-values.yaml . 
+  helm install ${THIS_CLUSTER}-es --values=$thisDIR/opensearch-values.yaml . 
+}
+
 install_efk_all_in_one () {
 # This is the new way which is not working yet, reverting
 # https://medium.com/@raphaeldelio/deploy-the-elastic-stack-in-kubernetes-with-the-elastic-cloud-on-kubernetes-eck-b51f667828f9
