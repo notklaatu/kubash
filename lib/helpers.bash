@@ -74,6 +74,13 @@ install_efk_opensearch () {
   cd $thisDIR
 }
 
+install_efk_opensearch_dashboards () {
+  cd ~/.kubash/submodules/opensearch-devops/Helm/opensearch-dashboards
+  echo helm install ${THIS_CLUSTER}-opensearch-dashboards --values=$thisDIR/opensearch-dashboard-values.yaml . 
+  helm install ${THIS_CLUSTER}-opensearch-dashboards --values=$thisDIR/opensearch-dashboard-values.yaml . 
+  cd $thisDIR
+}
+
 install_efk_all_in_one () {
 # This is the new way which is not working yet, reverting
 # https://medium.com/@raphaeldelio/deploy-the-elastic-stack-in-kubernetes-with-the-elastic-cloud-on-kubernetes-eck-b51f667828f9
