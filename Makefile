@@ -65,7 +65,7 @@ $(eval KUBEBUILDER_VERS := 2.3.1)
 $(eval KIND_VERS := v0.9.0)
 $(eval RKE_VERS := v1.0.16)
 $(eval KOMPOSE_VERSION := "v1.22.0")
-$(eval NOMAD_VERSION := "1.1.2")
+$(eval NOMAD_VERSION := "1.1.3")
 $(eval VAULT_VERSION := "1.7.3")
 $(eval CONSUL_VERSION := "1.10.1")
 

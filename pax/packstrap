@@ -393,6 +393,20 @@ EOF
   else
     if [ ! -z "$K8S_REGISTRY_MIRROR_HUB" ]; then
       daemon_string="\"$K8S_REGISTRY_MIRROR_HUB\""
+			mkdir -p /etc/systemd/system/docker.service.d
+
+cat << EOD > /etc/systemd/system/docker.service.d/http-proxy.conf
+[Service]
+Environment="HTTP_PROXY=$K8S_REGISTRY_MIRROR_HUB"
+Environment="HTTPS_PROXY=$K8S_REGISTRY_MIRROR_HUB"
+EOD
+
+			curl $K8S_REGISTRY_MIRROR_HUB/ca.crt > /usr/share/ca-certificates/docker_registry_proxy.crt
+			echo "docker_registry_proxy.crt" >> /etc/ca-certificates.conf
+			update-ca-certificates --fresh
+			systemctl daemon-reload
+			systemctl restart docker.service
+
     fi
     if [ ! -z "$K8S_REGISTRY_MIRROR_QUAY" ]; then
       daemon_string="$daemon_string, \"$K8S_REGISTRY_MIRROR_QUAY\""
