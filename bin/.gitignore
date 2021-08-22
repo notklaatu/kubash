@@ -2,6 +2,7 @@ arkade
 bats
 bridge
 cfssl
+cfssl-certinfo
 cfssljson
 crictl
 ct
