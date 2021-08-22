@@ -46,3 +46,9 @@ tiller
 tuning
 velero
 vlan
+nomad
+consul
+vault
+kubectl-minio
+mc
+minio

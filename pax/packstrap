@@ -1,9 +1,17 @@
 #!/bin/bash
 set -ex
 TMP=$(mktemp -d)
-. /etc/os-release
-: ${DEB_PRE_PACKAGES_TO_INSTALL:='apt-transport-https ca-certificates curl ebtables ethtool keepalived open-iscsi tgt ntp software-properties-common'}
-: ${DEB_PACKAGES_TO_INSTALL:='ceph ceph-test sysstat rsync fail2ban net-tools dnsutils python-pip vim htop iotop iftop zsh'}
+sed 's/^/export /' /etc/os-release > /tmp/os-release
+. /tmp/os-release
+printenv
+: ${DEB_PRE_PACKAGES_TO_INSTALL:='jq apt-transport-https ca-certificates curl ebtables ethtool keepalived open-iscsi tgt ntp software-properties-common'}
+if [ $UBUNTU_CODENAME = 'focal' ]; then
+  echo 'Focal is the OS'
+  : ${DEB_PACKAGES_TO_INSTALL:='ceph sysstat rsync fail2ban net-tools dnsutils python3-pip vim htop iotop iftop zsh'}
+else
+  echo 'Focal is not the OS'
+  : ${DEB_PACKAGES_TO_INSTALL:='ceph ceph-test sysstat rsync fail2ban net-tools dnsutils python-pip vim htop iotop iftop zsh'}
+fi
 # this one is for customization
 : ${ADDITIONAL_DEB_PACKAGES_TO_INSTALL:='NIL'}
 
@@ -140,10 +148,10 @@ EOF
   sysctl --system
 
   # Configure package repository
-  if [[ $NAME == 'Ubuntu' ]]; then
+  if [ "$NAME" = 'Ubuntu' ]; then
     sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${NAME}_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
     wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/x${NAME}_${VERSION_ID}/Release.key -O- | sudo apt-key add -
-  elif [[ $NAME == 'Debian' ]]; then
+  elif [ "$NAME" = 'Debian' ]; then
     echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
     wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_10/Release.key -O- | sudo apt-key add -
   fi
@@ -158,11 +166,11 @@ EOF
 install_zabbix_agent () {
 
   # Configure package repository
-  if [[ $NAME == 'Ubuntu' ]]; then
+  if [ "$NAME" = 'Ubuntu' ]; then
     wget https://repo.zabbix.com/zabbix/5.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.0-1%2B${UBUNTU_CODENAME}_all.deb 
     sudo dpkg -i zabbix-release_5.0-1+${UBUNTU_CODENAME}_all.deb
-  elif [[ $NAME == 'Debian' ]]; then
-    if [[ $VERSION_CODENAME == 'buster' ]]; then
+  elif [ "$NAME" = 'Debian' ]; then
+    if [ "$VERSION_CODENAME" = 'buster' ]; then
       echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
     else
       echo 'debian version unsupported'
@@ -233,7 +241,7 @@ EOF
 
 mkshowipaddress () {
   ## Show IP address in /etc/issue
-  if [[ $UBUNTU_CODENAME == 'xenial' ]]; then
+  if [ "$UBUNTU_CODENAME" = 'xenial' ]; then
   cat << EOF > /usr/local/bin/get-ip-address
     #!/bin/bash
     echo -n 'IP address = '
@@ -255,7 +263,7 @@ EOF
 
   cat << EOF > /etc/network/if-up.d/show-ip-address
   #!/bin/sh
-  if [[ -f /etc/issue-standard ]]; then
+  if [ -f /etc/issue-standard ]; then
     cp /etc/issue-standard /etc/issue
     echo 'issue-standard found' >> /etc/issue
   fi
@@ -380,7 +388,7 @@ EOF
   #printf 'DOCKER_OPTS="${DOCKER_OPTS} --registry-mirror=%s"' $K8S_REGISTRY_MIRROR >> /etc/default/docker
 
 
-  if [ $K8S_REGISTRY_MIRROR_HUB == "NULL_AND_VOID" ]; then
+  if [ "$K8S_REGISTRY_MIRROR_HUB" = "NULL_AND_VOID" ]; then
     echo 'No registry set, using defaults'
   else
     if [ ! -z "$K8S_REGISTRY_MIRROR_HUB" ]; then
