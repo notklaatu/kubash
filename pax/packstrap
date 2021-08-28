@@ -288,6 +288,8 @@ EOF
 }
 
 main () {
+  # for ES
+  echo 'vm.max_map_count=262144'|sudo tee -a /etc/sysctl.d/vm.conf
   apt-get update
   apt-get install -yqq \
   $DEB_PRE_PACKAGES_TO_INSTALL
